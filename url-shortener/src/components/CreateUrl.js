@@ -1,20 +1,33 @@
 import React from 'react'
 import { nanoid } from 'nanoid'
 import { useState } from 'react'
+import api from '../api/url'
 
 const CreateUrl = () => {
-    const [url, setUrl] = useState();
+    const [url, setUrl] = useState("https://www.google.com/");
     const [expirationDate, setExpirationDate] = useState(new Date());
     const [remember, setRemember] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
-
         console.log(shortenUrl());
     };
 
-    const shortenUrl = () => {
-        return nanoid(6, url);
+    const shortenUrl = async () => {
+        const date = new Date();
+        const payload = {
+            url: url,
+            shortUrl: nanoid(6, url),
+            expirationDate: date.toISOString()
+        };
+
+        await api.createUrl(payload)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     return (

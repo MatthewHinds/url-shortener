@@ -1,17 +1,25 @@
 import './App.css';
 import CreateUrl from './components/CreateUrl';
+import Navigate from './components/Navigate';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Url Shortener</h1>
+    <Router>
+      <div className="App">
 
-      <div id="form-container">
-        <CreateUrl></CreateUrl>
+        <Switch>
+          <Route path="/:shortUrl" component={Navigate}></Route>
+          <Route exact path="/">
+            <h1>Url Shortener</h1>
+            <div id="form-container">
+              <CreateUrl></CreateUrl>
+            </div>
+          </Route>
+        </Switch>
+        
       </div>
-      
-
-    </div>
+    </Router>
   );
 }
 

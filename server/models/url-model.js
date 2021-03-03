@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const Url = new Schema(
     {
         url: { type: String, required: true },
+        shortUrl: {type: String, required: true },
         expirationDate: { type: String, required: true}
     },
     {
