@@ -21,7 +21,7 @@ const CreateUrl = () => {
             expirationDate: date.toISOString()
         };
 
-        await api.createUrl(payload)
+        await api.storeUrl(payload)
             .then(response => {
                 console.log(response);
             })
