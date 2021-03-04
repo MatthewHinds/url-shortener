@@ -5,12 +5,13 @@ import api from '../api/url'
 
 const CreateUrl = () => {
     const [url, setUrl] = useState("https://www.google.com/");
+    const [shortUrl, setShortUrl] = useState();
     const [expirationDate, setExpirationDate] = useState(new Date());
     const [remember, setRemember] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(shortenUrl());
+        shortenUrl();
     };
 
     const shortenUrl = async () => {
@@ -23,6 +24,9 @@ const CreateUrl = () => {
 
         await api.storeUrl(payload)
             .then(response => {
+                if (response.data.success) {
+                    setShortUrl(`${window.location.href}${payload.shortUrl}`);
+                }
                 console.log(response);
             })
             .catch(error => {
@@ -37,6 +41,8 @@ const CreateUrl = () => {
                 <input type="url" id="input-url" onChange={event => setUrl(event.target.value)}></input>
                 <button type="submit" value="Create URL">Create URL</button>
             </form>
+
+            <h1>Short Url: <a href={shortUrl}>{shortUrl}</a></h1>
         </div>
     )
 }
